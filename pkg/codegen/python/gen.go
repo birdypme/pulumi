@@ -832,8 +832,12 @@ func (mod *modContext) genResource(res *schema.Resource) (string, error) {
 	fmt.Fprintf(w, "            '%s',\n", tok)
 	fmt.Fprintf(w, "            resource_name,\n")
 	fmt.Fprintf(w, "            __props__,\n")
-	fmt.Fprintf(w, "            opts,\n")
-	fmt.Fprintf(w, "            remote=True)\n")
+	if res.IsComponent {
+		fmt.Fprintf(w, "            opts,\n")
+		fmt.Fprintf(w, "            remote=True)\n")
+	} else {
+		fmt.Fprintf(w, "            opts)\n")
+	}
 	fmt.Fprintf(w, "\n")
 
 	if !res.IsProvider {
